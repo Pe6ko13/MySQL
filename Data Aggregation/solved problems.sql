@@ -86,3 +86,37 @@ SET avg_salary = avg_salary + 5000
 WHERE department_id = 1;
 SELECT `department_id`, round(`avg_salary`, 2) as `avg_salary` FROM avg_salary_table
 ORDER BY department_id;
+
+
+SELECT `department_id`, round(MAX(`salary`), 2) FROM employees
+GROUP BY `department_id`
+having MAX(`salary`) NOT BETWEEN 30000 AND 70000
+ORDER BY `department_id`;
+
+
+SELECT COUNT(`salary`) as `count` FROM employees
+WHERE `manager_id` is NULL;
+
+
+SELECT `department_id`, (SELECT DISTINCT round(`salary`, 2) FROM employees as `em`
+                            WHERE em.department_id = e.department_id
+                            ORDER BY salary DESC
+                            LIMIT 2, 1) as third_highest_salary
+
+FROM employees AS e
+GROUP BY department_id
+HAVING third_highest_salary IS NOT NULL
+ORDER BY e.department_id;
+
+
+SELECT e.`first_name`, e.`last_name`, e.`department_id` FROM employees AS e
+WHERE `salary` > (SELECT AVG(`salary`) FROM employees AS es
+                    WHERE e.department_id = es.department_id
+                    GROUP BY es.department_id)
+ORDER BY department_id, employee_id
+LIMIT 10;
+
+
+SELECT `department_id`, round(SUM(`salary`), 2) as `total_salary` FROM employees
+GROUP BY `department_id`
+ORDER BY `department_id`;
