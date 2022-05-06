@@ -62,4 +62,12 @@ ORDER BY `first_letter`;
 SELECT `deposit_group`, `is_deposit_expired`, AVG(`deposit_interest`) as `average_interest` FROM wizzard_deposits
 WHERE `deposit_start_date` > '1985-01-01'
 GROUP BY `is_deposit_expired`, `deposit_group`
-ORDER BY `deposit_group` DESC, `is_deposit_expired`
+ORDER BY `deposit_group` DESC, `is_deposit_expired`;
+
+
+SELECT SUM(`next`) as `sum_difference` FROM (
+    SELECT `deposit_amount` - (SELECT `deposit_amount` 
+                                FROM `wizzard_deposits`
+                                WHERE `id` = wd.id +1) as `next`
+    FROM `wizzard_deposits` as wd) as `diff`;
+)
