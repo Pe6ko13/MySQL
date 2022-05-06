@@ -70,4 +70,19 @@ SELECT SUM(`next`) as `sum_difference` FROM (
                                 FROM `wizzard_deposits`
                                 WHERE `id` = wd.id +1) as `next`
     FROM `wizzard_deposits` as wd) as `diff`;
-)
+
+
+SELECT `department_id`, round(MIN(`salary`), 2) as `minimum_salary` FROM employees
+WHERE department_id = 2 OR department_id = 5 OR department_id = 7 AND hire_date > '2000/01/01'
+GROUP BY `department_id`
+ORDER BY `department_id`;
+
+
+CREATE TABLE avg_salary_table AS SELECT `department_id`, AVG(`salary`) as `avg_salary` FROM employees
+WHERE manager_id != 42 AND salary > 30000
+GROUP BY department_id;
+UPDATE avg_salary_table
+SET avg_salary = avg_salary + 5000
+WHERE department_id = 1;
+SELECT `department_id`, round(`avg_salary`, 2) as `avg_salary` FROM avg_salary_table
+ORDER BY department_id;
