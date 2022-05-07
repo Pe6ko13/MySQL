@@ -99,10 +99,9 @@ WHERE `manager_id` is NULL;
 
 
 SELECT `department_id`, (SELECT DISTINCT round(`salary`, 2) FROM employees as `em`
-                            WHERE em.department_id = e.department_id
-                            ORDER BY salary DESC
-                            LIMIT 2, 1) as third_highest_salary
-
+                        WHERE em.department_id = e.department_id
+                        ORDER BY salary DESC
+                        LIMIT 2, 1) as third_highest_salary
 FROM employees AS e
 GROUP BY department_id
 HAVING third_highest_salary IS NOT NULL
