@@ -12,6 +12,5 @@ CREATE TABLE persons (
     FOREIGN KEY (passport_id) REFERENCES passports(passport_id)
 );
 
-INSERT INTO passports VALUES(
-    
-);
+INSERT INTO passports VALUES(101, 'N34FG21B'), (102, 'K65LO4R7'), (103, 'ZE657QP2');
+
