@@ -69,3 +69,16 @@ CREATE TABLE students_exams (
 );
 
 INSERT INTO students_exams VALUES(1, 101), (1, 102), (2, 101), (3, 103), (2, 102), (2, 103);
+
+
+4. CREATE TABLE teachers (
+    teacher_id INT not NULL AUTO_INCREMENT PRIMARY KEY,
+    `name` VARCHAR(25) NOT NULL,
+    manager_id INT  
+) AUTO_INCREMENT = 101;
+
+INSERT INTO teachers (`name`, manager_id) VALUES('John', NULL), ('Maya', 106), ('Silvi', 106), ('Ted', 105), ('Mark', 101), ('Greta', 101);
+
+ALTER TABLE teachers ADD
+CONSTRAINT fk_manager_teacher
+FOREIGN KEY (manager_id) REFERENCES teachers(teacher_id)
