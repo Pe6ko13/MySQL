@@ -19,6 +19,7 @@ VALUES('Roberto', '43300.00', 102),
 ('Tom', 56100.00, 103), 
 ('Yana', 60200.00, 101);
 
+
 2. CREATE TABLE manufacturers(
     manufacturers_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     `name` VARCHAR(40) not NULL,
@@ -42,3 +43,29 @@ REFERENCES manufacturers(manufacturer_id);
 INSERT INTO models(model_id, `name`, manufacturer_id) 
 VALUES(101, 'X1', 1), (102, 'i6', 1), (103, 'S', 2), (104, 'X', 2),
 (105, 'Model 3', 2), (106, 'Niva', 3), (107, 'Vesta', 3);
+
+
+3. CREATE TABLE students(
+    student_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `name` VARCHAR(20) NOT NULL
+);
+
+INSERT INTO students (`name`) VALUES('Mila'), ('Toni'), ('Ron');
+
+CREATE TABLE exams (
+    exam_id INT not NULL AUTO_INCREMENT PRIMARY KEY,
+    `name` VARCHAR(40) not NULL
+);
+
+INSERT INTO exams VALUES(101, 'SpringMVC'), (102,'Neo4j'), (103,'Oracle 11g');
+
+CREATE TABLE students_exams (
+    student_id INT not NULL,
+    exam_id INT NOT NULL,
+    CONSTRAINT fk_students_exams_students
+    FOREIGN KEY (student_id) REFERENCES students(student_id),
+    CONSTRAINT fk_students_exams_exams
+    FOREIGN KEY (exam_id) REFERENCES exams(exam_id)
+);
+
+INSERT INTO students_exams VALUES(1, 101), (1, 102), (2, 101), (3, 103), (2, 102), (2, 103);
