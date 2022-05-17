@@ -122,7 +122,7 @@ HAVING currency_usage > 1 AND currency_usage = (
 )
 ORDER BY c.continent_code, c.currency_code;
 
-16.
+
 SELECT COUNT(*) AS `country_count` 
 FROM (
     SELECT country_code FROM mountains_countries
