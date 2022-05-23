@@ -77,3 +77,50 @@ RETURN (
 
 SELECT ufn_get_salary_level(20000);
 
+
+06.
+DELIMITER $$
+CREATE PROCEDURE usp_get_employees_by_salary_level(salary_level VARCHAR(45))
+BEGIN
+    SELECT first_name, last_name FROM employees
+    WHERE ufn_get_salary_level(salary) = salary_level
+    ORDER BY first_name DESC , last_name DESC;
+END $$
+DELIMITER $$
+
+CALL usp_get_employees_by_salary_level('High');
+
+
+07.
+CREATE FUNCTION ufn_is_word_comprised(set_of_letters varchar(50), word varchar(50))
+RETURNS INT
+BEGIN
+    DECLARE idx INT;
+    DECLARE symbol VARCHAR(1);
+    SET idx := 1;
+
+    WHILE idx <= CHAR_LENGTH(word) DO
+        SET symbol := SUBstring(word, idx, 1);
+        IF LOCATE(symbol, set_of_letters) = 0 THEN
+            RETURN 0;
+        END IF;
+        SET idx := idx + 1;
+    END WHILE;
+    RETURN 1;
+END $$
+
+SELECT ufn_is_word_comprised('oistmiahf', 'Sofia');
+
+
+08.
+DELIMITER $$
+CREATE PROCEDURE usp_get_holders_full_name()
+BEGIN
+    SELECT CONCAT(first_name, ' ', last_name) AS `full_name` FROM account_holders AS ah
+    JOIN (
+        SELECT DISTINCT a.account_holder_id FROM accounts AS a
+    ) AS a ON ah.id = a.account_holder_id
+    ORDER BY `full_name`, ah.id;
+END $$
+
+CALL usp_get_holders_full_name();
