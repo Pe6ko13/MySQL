@@ -276,10 +276,10 @@ CREATE TRIGGER tr_logs_inserted_emails
 AFTER INSERT ON `logs` 
 FOR EACH ROW 
 BEGIN
-    INSERT INTO notification_emails (recipient, subject, body)
+    INSERT INTO notification_emails (recipient, `subject`, body)
     VALUES (new.account_id,
             concat('Balance change for account: ', new.account_id),
-            concat('On ', date(curdate()), 'your balance was changed from',
+            concat('On ', DATE(curdate()), 'your balance was changed from',
                 new.old_sum, ' to ', new.new_sum)
             );
 END
