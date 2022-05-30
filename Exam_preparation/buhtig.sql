@@ -97,13 +97,16 @@ CREATE PROCEDURE udp_commit(
 BEGIN
     START TRANSACTION;
     IF ((SELECT COUNT(*) FROM users u WHERE u.username = username) = 0)
-        THEN SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'No such user!';
+        THEN SIGNAL SQLSTATE '45000' 
+        SET MESSAGE_TEXT = 'No such user!';
         ROLLBACK;
-    ELSEIF ((SELECT COUNT(*) FROM users u WHERE u.username = username AND u.password = password) = 0)
-        THEN SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Password is incorrect!';
+    ELSEIF ((SELECT u.password FROM users u WHERE u.username = username) <> password)
+        THEN SIGNAL SQLSTATE '45000' 
+        SET MESSAGE_TEXT = 'Password is incorrect!';
         ROLLBACK;
     ELSEIF ((SELECT COUNT(*) FROM issues i WHERE i.id = issue_id) = 0)
-        THEN SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'The issue does not exist!';
+        THEN SIGNAL SQLSTATE '45000' 
+        SET MESSAGE_TEXT = 'The issue does not exist!';
         ROLLBACK;
     ELSE
         INSERT INTO commits (`message`, `issue_id`, `repository_id`, `contributor_id`) 
