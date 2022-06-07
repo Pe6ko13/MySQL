@@ -1,4 +1,4 @@
-USE colonial_journey_ms;
+USE colonial_journey_ms_2;
 
 CREATE TABLE planets (
     id INT(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
